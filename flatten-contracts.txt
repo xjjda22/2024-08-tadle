@@ -1,0 +1,9 @@
+forge flatten --output src/core/CapitalPool.flattened.sol src/core/CapitalPool.sol
+forge flatten --output src/core/PreMarkets.flattened.sol src/core/PreMarkets.sol
+forge flatten --output src/core/DeliveryPlace.flattened.sol src/core/DeliveryPlace.sol
+forge flatten --output src/core/SystemConfig.flattened.sol src/core/SystemConfig.sol
+forge flatten --output src/core/TokenManager.flattened.sol src/core/TokenManager.sol
+
+docker run mythril/myth analyze src/core/CapitalPool.flattened.sol
+
+docker run -v $(pwd):/tmp mythril/myth analyze /tmp/CapitalPool.flattened.sol
