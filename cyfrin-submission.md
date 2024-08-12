@@ -68,3 +68,31 @@ Let's start the analysis:
 - **Impact**: Could lead to loss of tokens, contract exploits, or system failure.
 - **Tools Used**: Manual code inspection.
 - **Recommendations**: Use patterns like OpenZeppelin’s `ReentrancyGuard`, avoid low-level calls unless necessary, and use safe arithmetic practices.
+
+### Additional Vulnerabilities:
+
+1. **Incorrect Token Address Usage in `DeliveryPlace`:**
+   - **Issue**: The `closeBidTaker` function in the `DeliveryPlace` contract incorrectly uses `makerInfo.tokenAddress` instead of `marketPlaceInfo.tokenAddress` for updating the point balance of a bid taker.
+   - **Impact**: Users may not receive their points, leading to them being stuck in the `CapitalPool` contract.
+   - **Recommendation**: Update the `closeBidTaker` function to use `marketPlaceInfo.tokenAddress` for point-related operations.
+
+2. **Reentrancy Attack Potential:**
+   - **Issue**: Functions in various contracts, especially those involving external calls, may be susceptible to reentrancy attacks.
+   - **Impact**: This could result in unauthorized fund withdrawals or manipulation of contract states.
+   - **Recommendation**: Implement reentrancy protection mechanisms such as `ReentrancyGuard`.
+
+3. **Unchecked Arithmetic Operations:**
+   - **Issue**: There are potential unchecked arithmetic operations across several contracts.
+   - **Impact**: This could lead to overflow/underflow errors, enabling attackers to exploit the contract.
+   - **Recommendation**: Use Solidity’s built-in arithmetic checks (in Solidity 0.8+), or employ safe math libraries.
+
+4. **Use of `tx.origin`:**
+   - **Issue**: The use of `tx.origin` for authorization poses a security risk as it can be exploited via phishing attacks.
+   - **Impact**: This could allow unauthorized access to critical contract functions.
+   - **Recommendation**: Replace `tx.origin` with `msg.sender` for performing authorization checks.
+
+5. **Unsafe External Calls (`delegatecall` and `call`):**
+   - **Issue**: The use of `delegatecall` and unverified `call` operations is risky and could lead to malicious control over contract execution.
+   - **Impact**: Potential malicious state changes or loss of contract control.
+   - **Recommendation**: Limit the use of `delegatecall` and ensure all external calls are made to trusted addresses.
+
