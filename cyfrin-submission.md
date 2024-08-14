@@ -96,3 +96,8 @@ Let's start the analysis:
    - **Impact**: Potential malicious state changes or loss of contract control.
    - **Recommendation**: Limit the use of `delegatecall` and ensure all external calls are made to trusted addresses.
 
+6 **Rounding Issue in `abortBidTaker` Causes Loss of Funds For the Takers:**
+   - **Issue**: In the `PreMarket` contract, the `abortBidTaker` function suffers from a rounding issue in the `getDepositAmount` function, which results in the deposit amount being calculated as zero.
+   - **Impact**: Users attempting to abort their bids may lose their deposited funds due to incorrect deposit calculations. The funds get locked in the `CapitalPool` contract and cannot be retrieved.
+   - **Recommendation**: Fix the rounding issue in the `getDepositAmount` calculation to ensure accurate deposit amounts are calculated, possibly by using more precise arithmetic operations.
+
