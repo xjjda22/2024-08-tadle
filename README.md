@@ -142,3 +142,6 @@ No known issues reported.
 **Additional Known Issues, as detected by LightChaser, can be found [here](https://github.com/Cyfrin/2024-08-tadle/issues/1).**
 
 [//]: # (known-issues-close)
+
+# [cyfrin submission](https://codehawks.cyfrin.io/c/2024-08-tadle)
+The [cyfrin-submission.md](./cyfrin-submission.md) file contains a detailed security analysis of Solidity contracts
